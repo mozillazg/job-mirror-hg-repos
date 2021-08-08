@@ -61,6 +61,8 @@ jobs:
           git pull
           git reset --hard default
           
+          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+          
           git push mirror --all
           
           git push mirror --tags
