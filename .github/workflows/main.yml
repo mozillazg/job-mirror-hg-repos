@@ -39,9 +39,9 @@ jobs:
       - name: install git-remote-hg
         run: |
           set -xe
-          git clone https://mozillazg:${{ env.TOKEN }}@github.com/mozillazg/git-remote-hg.git -b pypy
+          git clone https://github.com/mozillazg/git-remote-hg.git -b pypy
           cd git-remote-hg
-          git chmod +x git-remote-hg
+          chmod +x git-remote-hg
           cp git-remote-hg /usr/local/bin/
           
       - name: init mirror repo
@@ -50,7 +50,7 @@ jobs:
           git clone "hg::https://foss.heptapod.net/pypy/buildbot"
           cd buildbot
           git config core.notesRef refs/notes/hg
-          git remote add mirror git@github.com:mozillazg/pypy-buildbot.git
+          git remote add mirror https://mozillazg:${{ env.TOKEN }}@github.com/mozillazg/pypy-buildbot.git
           
           for remote in `git branch|grep -v '\* master'`; do
             git branch -d $remote
