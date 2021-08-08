@@ -32,7 +32,7 @@ jobs:
           wget https://www.mercurial-scm.org/release/mercurial-3.2.4.tar.gz
           tar zxf mercurial-3.2.4.tar.gz
           cd mercurial-3.2.4
-          sudo pip install python-docutils
+          sudo pip install docutils
           sudo make install
 
       - name: install git-remote-hg
