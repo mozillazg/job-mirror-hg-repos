@@ -30,7 +30,7 @@ jobs:
         run: |
           set -xe
           wget https://www.mercurial-scm.org/release/mercurial-3.2.4.tar.gz
-          tar zvf mercurial-3.2.4.tar.gz
+          tar zxf mercurial-3.2.4.tar.gz
           cd mercurial-3.2.4
           sudo make install
 
