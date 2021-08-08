@@ -61,8 +61,8 @@ jobs:
           git pull
           git reset --hard default
           
-          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+          # git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
           
-          git push mirror --all
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
           
-          git push mirror --tags
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
