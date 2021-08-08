@@ -50,7 +50,7 @@ jobs:
           git clone "hg::https://foss.heptapod.net/pypy/buildbot"
           cd buildbot
           git config core.notesRef refs/notes/hg
-          git remote add mirror https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
+          # git remote add mirror https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
           
           for remote in `git branch|grep -v '\* master'`; do
             git branch -d $remote
@@ -63,6 +63,6 @@ jobs:
           
           # git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
           
-          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
+          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
           
-          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
+          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
