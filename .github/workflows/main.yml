@@ -66,3 +66,18 @@ jobs:
           git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
           
           git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
+          
+      - name: test update exist mirror repo
+        run: |
+          set -xe
+          
+          git clone https://github.com/mozillazg/pypy-buildbot.git
+          cd pypy-buildbot
+          
+          git config core.notesRef refs/notes/hg
+          python ../git-remote-hg/track_all_remote_branches.py
+          git pull
+          
+          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
+          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
+          
