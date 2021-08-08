@@ -39,7 +39,7 @@ jobs:
       - name: install git-remote-hg
         run: |
           set -xe
-          git clone https://${{ env.GIT_USERNAME }}:${{ secrets.TOKEN }}@github.com/mozillazg/git-remote-hg.git -b pypy
+          git clone https://mozillazg:${{ env.TOKEN }}@github.com/mozillazg/git-remote-hg.git -b pypy
           cd git-remote-hg
           git chmod +x git-remote-hg
           cp git-remote-hg /usr/local/bin/
