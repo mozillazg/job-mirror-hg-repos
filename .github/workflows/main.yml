@@ -50,7 +50,7 @@ jobs:
           git clone "hg::https://foss.heptapod.net/pypy/buildbot"
           cd buildbot
           git config core.notesRef refs/notes/hg
-          git remote add mirror https://mozillazg:${{ env.TOKEN }}@github.com/mozillazg/pypy-buildbot.git
+          git remote add mirror https://mozillazg:${{ secret.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
           
           for remote in `git branch|grep -v '\* master'`; do
             git branch -d $remote
