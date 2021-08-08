@@ -75,6 +75,7 @@ jobs:
           cd pypy-buildbot
           
           git config core.notesRef refs/notes/hg
+          git remote origin set-url 'hg::https://foss.heptapod.net/pypy/buildbot'
           python ../git-remote-hg/track_all_remote_branches.py
           git pull
           
