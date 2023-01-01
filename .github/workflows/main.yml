@@ -2,85 +2,41 @@
 
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
     - cron: "02 03 */1 * *"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "mirror"
-  mirror:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+jobs:
+
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: install hg
-        run: |
-          set -xe
-          # wget https://www.mercurial-scm.org/release/mercurial-3.2.4.tar.gz
-          # tar zxf mercurial-3.2.4.tar.gz
-          # cd mercurial-3.2.4
-          # sudo pip install docutils
-          # sudo make install
-          sudo pip install mercurial==5.3.2
+      - name: Set up Python 2
+        uses: actions/setup-python@v4
+        with:
+          python-version: 2.7
 
-      - name: install git-remote-hg
-        run: |
-          set -xe
-          git clone https://github.com/mozillazg/git-remote-hg.git -b pypy
-          cd git-remote-hg
-          chmod +x git-remote-hg
-          cp git-remote-hg /usr/local/bin/
           
-      - name: init mirror repo
-        run: |
-          set -xe
-          git clone "hg::https://foss.heptapod.net/pypy/buildbot"
-          cd buildbot
-          git config core.notesRef refs/notes/hg
-          # git remote add mirror https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
-          
-          for remote in `git branch|grep -v '\* master'`; do
-            git branch -d $remote
-          done
-          
-          python ../git-remote-hg/track_all_remote_branches.py
-          
-          git pull
-          git reset --hard default
-          
-          # git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-          
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
-          
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
-          
-      - name: test update exist mirror repo
-        run: |
-          set -xe
-          
-          git clone https://github.com/mozillazg/pypy-buildbot.git
-          cd pypy-buildbot
-          
-          git config core.notesRef refs/notes/hg
-          git remote set-url origin 'hg::https://foss.heptapod.net/pypy/buildbot'
-          python ../git-remote-hg/track_all_remote_branches.py
-          git pull
-          
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
-          
+      - name: mirror https://foss.heptapod.net/pypy/buildbot to https://github.com/mozillazg/pypy-buildbot
+        uses: 'mozillazg/mirror-hg-repo@v1'
+        with:
+          source-hg-repo-url: 'https://foss.heptapod.net/pypy/buildbot'
+          destination-git-repo-owner: 'mozillazg'
+          destination-git-repo-name: 'pypy-buildbot'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
+      - name: mirror https://foss.heptapod.net/pypy/cffi to https://github.com/mozillazg/pypy
+        uses: 'mozillazg/mirror-hg-repo@v1'
+        with:
+          source-hg-repo-url: 'https://foss.heptapod.net/pypy/cffi'
+          destination-git-repo-owner: 'mozillazg'
+          destination-git-repo-name: 'cffi'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
