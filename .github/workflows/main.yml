@@ -20,7 +20,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -52,7 +52,7 @@ jobs:
           git clone "hg::https://foss.heptapod.net/pypy/buildbot"
           cd buildbot
           git config core.notesRef refs/notes/hg
-          # git remote add mirror https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
+          # git remote add mirror https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git
           
           for remote in `git branch|grep -v '\* master'`; do
             git branch -d $remote
@@ -65,9 +65,9 @@ jobs:
           
           # git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
           
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
           
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
           
       - name: test update exist mirror repo
         run: |
@@ -81,6 +81,6 @@ jobs:
           python ../git-remote-hg/track_all_remote_branches.py
           git pull
           
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
-          git push https://mozillazg:${{ secrets.PERSONAL_GIT_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --all
+          git push https://mozillazg:${{ secrets.GITHUB_TOKEN }}@github.com/mozillazg/pypy-buildbot.git --tags
           
