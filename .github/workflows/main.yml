@@ -1,29 +1,26 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: mirror
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "02 03 */1 * *"
+    - cron: "03 */8 */1 * *"
 
 
 jobs:
 
-  mirror:
-    runs-on: ubuntu-latest
+  mirror-buildbot:
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python 2
+      - name: Setup Python 2
         uses: actions/setup-python@v4
         with:
           python-version: 2.7
 
-          
       - name: mirror https://foss.heptapod.net/pypy/buildbot to https://github.com/mozillazg/pypy-buildbot
         uses: 'mozillazg/mirror-hg-repo@v1'
         with:
@@ -32,11 +29,45 @@ jobs:
           destination-git-repo-name: 'pypy-buildbot'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
 
-      - name: mirror https://foss.heptapod.net/pypy/cffi to https://github.com/mozillazg/pypy
+  mirror-cffi:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python 2
+        uses: actions/setup-python@v4
+        with:
+          python-version: 2.7
+
+      - name: mirror https://foss.heptapod.net/pypy/cffi to https://github.com/mozillazg/cffi
         uses: 'mozillazg/mirror-hg-repo@v1'
         with:
           source-hg-repo-url: 'https://foss.heptapod.net/pypy/cffi'
           destination-git-repo-owner: 'mozillazg'
           destination-git-repo-name: 'cffi'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
+  mirror-pypy:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python 2
+        uses: actions/setup-python@v4
+        with:
+          python-version: 2.7
+
+      - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
+        uses: 'mozillazg/mirror-hg-repo@v1'
+        with:
+          source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
+          destination-git-repo-owner: 'mozillazg'
+          destination-git-repo-name: 'pypy'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
 
