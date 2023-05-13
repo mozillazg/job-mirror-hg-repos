@@ -9,7 +9,7 @@ on:
 jobs:
 
   mirror-buildbot:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
 
@@ -28,7 +28,7 @@ jobs:
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
 
   mirror-cffi:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
 
@@ -46,25 +46,22 @@ jobs:
           destination-git-repo-name: 'cffi'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
 
-  # disable due to too slow
-  # mirror-pypy:
-  #   runs-on: ubuntu-22.04
-  #   permissions:
-  #     contents: read
-  #
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #
-  #     - name: Setup Python 2
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: 2.7
-  #
-  #     - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
-  #       uses: 'mozillazg/mirror-hg-repo@v1'
-  #       with:
-  #         source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
-  #         destination-git-repo-owner: 'mozillazg'
-  #         destination-git-repo-name: 'pypy'
-  #         destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
-  #
+  mirror-pypy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+  
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+  
+      - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
+        uses: 'mozillazg/mirror-hg-repo@python3'
+        with:
+          source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
+          destination-git-repo-owner: 'mozillazg'
+          destination-git-repo-name: 'pypy'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+  
