@@ -20,7 +20,7 @@ jobs:
           python-version: '3.10'
 
       - name: mirror https://foss.heptapod.net/pypy/buildbot to https://github.com/mozillazg/pypy-buildbot
-        uses: 'mozillazg/mirror-hg-repo@python3'
+        uses: 'mozillazg/mirror-hg-repo@develop'
         with:
           source-hg-repo-url: 'https://foss.heptapod.net/pypy/buildbot'
           destination-git-repo-owner: 'mozillazg'
@@ -39,7 +39,7 @@ jobs:
           python-version: '3.10'
 
       - name: mirror https://foss.heptapod.net/pypy/cffi to https://github.com/mozillazg/cffi
-        uses: 'mozillazg/mirror-hg-repo@python3'
+        uses: 'mozillazg/mirror-hg-repo@develop'
         with:
           source-hg-repo-url: 'https://foss.heptapod.net/pypy/cffi'
           destination-git-repo-owner: 'mozillazg'
@@ -58,10 +58,11 @@ jobs:
           python-version: '3.10'
   
       - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
-        uses: 'mozillazg/mirror-hg-repo@python3'
+        uses: 'mozillazg/mirror-hg-repo@develop'
         with:
           source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
           destination-git-repo-owner: 'mozillazg'
           destination-git-repo-name: 'pypy'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
-  
+          repo-style: 'pypy-style'
+
