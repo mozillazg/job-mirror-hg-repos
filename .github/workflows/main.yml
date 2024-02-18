@@ -77,10 +77,34 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: mirror https://freenginx.org/hg/nginx to https://github.com/mozillazg/freenginx
+      - name: mirror https://freenginx.org/hg/nginx to https://github.com/freenginx-mirror/nginx
         uses: 'mozillazg/mirror-hg-repo@v2'
         with:
           source-hg-repo-url: 'https://freenginx.org/hg/nginx'
-          destination-git-repo-owner: 'mozillazg'
-          destination-git-repo-name: 'freenginx'
+          destination-git-repo-owner: 'freenginx-mirror'
+          destination-git-repo-name: 'nginx'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
+      - name: mirror https://freenginx.org/hg/xslscript to https://github.com/freenginx-mirror/xslscript
+        uses: 'mozillazg/mirror-hg-repo@v2'
+        with:
+          source-hg-repo-url: 'https://freenginx.org/hg/xslscript'
+          destination-git-repo-owner: 'freenginx-mirror'
+          destination-git-repo-name: 'xslscript'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
+      - name: mirror https://freenginx.org/hg/nginx-tests to https://github.com/freenginx-mirror/nginx-tests
+        uses: 'mozillazg/mirror-hg-repo@v2'
+        with:
+          source-hg-repo-url: 'https://freenginx.org/hg/nginx-tests'
+          destination-git-repo-owner: 'freenginx-mirror'
+          destination-git-repo-name: 'nginx-tests'
+          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+
+      - name: mirror https://freenginx.org/hg/nginx-site to https://github.com/freenginx-mirror/nginx-site
+        uses: 'mozillazg/mirror-hg-repo@v2'
+        with:
+          source-hg-repo-url: 'https://freenginx.org/hg/nginx-site'
+          destination-git-repo-owner: 'freenginx-mirror'
+          destination-git-repo-name: 'nginx-site'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
