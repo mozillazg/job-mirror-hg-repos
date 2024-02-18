@@ -14,8 +14,8 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -33,8 +33,8 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -46,22 +46,22 @@ jobs:
           destination-git-repo-name: 'cffi'
           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
 
-  mirror-pypy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-  
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-  
-      - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
-        uses: 'mozillazg/mirror-hg-repo@v2'
-        with:
-          source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
-          destination-git-repo-owner: 'mozillazg'
-          destination-git-repo-name: 'pypy'
-          destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
-          repo-style: 'pypy-style'
+#   mirror-pypy:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#   
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.10'
+#   
+#       - name: mirror https://foss.heptapod.net/pypy/pypy to https://github.com/mozillazg/pypy
+#         uses: 'mozillazg/mirror-hg-repo@v2'
+#         with:
+#           source-hg-repo-url: 'https://foss.heptapod.net/pypy/pypy'
+#           destination-git-repo-owner: 'mozillazg'
+#           destination-git-repo-name: 'pypy'
+#           destination-git-personal-token: '${{ secrets.PERSONAL_GIT_TOKEN }}'
+#           repo-style: 'pypy-style'
